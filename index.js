@@ -1,19 +1,18 @@
 const express = require('express');
 const { sequelize, User, Group, Task } = require('./models');
-const { where } = require('sequelize');
 
 const app = express();
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 /** 
- * onUpdate and onDelete for table in relationship follow Sequelize's default
+ * onUpdate and onDelete for tables in relationship follow Sequelize's default
  * https://sequelize.org/docs/v6/core-concepts/assocs/
  */
 
 // =========================== User endpoints ===================================
 /**
- * No enforcing email and phone number to be in standard format
+ * Note: No enforcing email and phone number to be in standard format
  */
 
 // get all users
@@ -118,7 +117,7 @@ app.delete('/user/:userId', async (req, res) => {
       where: { id: userId }
     });
 
-    if (deleted) { 
+    if (deleted !== 0) { 
       res.status(200).json({ message: 'User deleted successfully' });
     } else {
       res.status(404).json({ message: 'User not found' });
@@ -210,7 +209,7 @@ app.delete('/group/:groupId', async (req, res) => {
       where: { id: groupId }
     });
 
-    if (deleted) {
+    if (deleted !== 0) {
       res.status(200).json({ message: 'Group deleted successfully' });
     } else {
       res.status(404).json({ message: 'Group not found' });
@@ -270,7 +269,7 @@ app.delete('/task/:taskId', async (req, res) => {
       where: { id: taskId }
     });
 
-    if (deleted) {
+    if (deleted !== 0) {
       res.status(200).json({ message: 'Task deleted successfully' });
     } else {
       res.status(404).json({ message: 'Task not found' });
