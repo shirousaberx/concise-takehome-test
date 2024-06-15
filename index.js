@@ -35,7 +35,7 @@ app.post('/user', async (req, res) => {
 
   try {
     const user = await User.create({ name, email, phone_number, address })
-    return res.status(200).json(user) // return created user
+    return res.status(201).json(user) // return created user
 
   } catch (error) {
     res.status(400).json({ message: 'Error creating user', error: error.message });
@@ -98,7 +98,7 @@ app.put('/user/:userId', async (req, res) => {
     );
 
     if (affectedRows !== 0) {  
-      res.status(200).json({ message: "Successfully updated user" });  
+      res.status(201).json({ message: "Successfully updated user" });  
     } else {
       res.status(404).json({ message: 'User not found' });
     }
@@ -147,7 +147,7 @@ app.post('/group', async (req, res) => {
 
   try {
     const group = await Group.create({ name, description })
-    return res.status(200).json(group) // return created group
+    return res.status(201).json({ message: "Successfully created group", group: group }) // return created group
 
   } catch (error) {
     res.status(400).json({ message: 'Error creating group', error: error.message });
@@ -190,7 +190,7 @@ app.put('/group/:groupId', async (req, res) => {
     );
 
     if (affectedRows !== 0) { 
-      res.status(200).json({ message: "Successfully updated group "});  
+      res.status(201).json({ message: "Successfully updated group "});  
     } else {
       res.status(404).json({ message: 'Group not found' });
     }
@@ -227,7 +227,7 @@ app.post('/task', async (req, res) => {
 
   try {
     const task = await Task.create({ name, deadline })
-    return res.status(200).json(task) // return created task
+    return res.status(201).json(task) // return created task
 
   } catch (error) {
     res.status(400).json({ message: 'Error creating task', error: error.message });
@@ -251,7 +251,7 @@ app.put('/task/:taskId/user/:userId', async (req, res) => {
     );
 
     if (affectedRows !== 0) { 
-      res.status(200).json({ message: "Successfully updated task on associated user" });
+      res.status(201).json({ message: "Successfully updated task on associated user" });
     } else {
       res.status(404).json({ message: "Task not found" })
     }
@@ -332,7 +332,7 @@ app.put('/user/:userId/group/:groupId', async (req, res) => {
 
     await user.addGroup(group);
 
-    res.status(200).json({ message: 'User added to group successfully' });
+    res.status(201).json({ message: 'User added to group successfully' });
   } catch (error) {
     res.status(400).json({ message: 'Error adding user to group', error: error.message });
   }
